@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Task Manager</title>
+</head>
+<body>
+  <h1>Task Manager</h1>
+  <input type="text" id="taskInput" placeholder="Enter task" />
+  <button id="addBtn">Add</button>
+  <ul id="taskList"></ul>
+
+  <script>
+    const api = "/api/tasks";
+
+    async function loadTasks() {
+      const res = await fetch(api);
+      const tasks = await res.json();
+      const list = document.getElementById("taskList");
+      list.innerHTML = "";
+      tasks.forEach(t => {
+        const li = document.createElement("li");
+        li.textContent = t.name + " ";
+        const del = document.createElement("button");
+        del.textContent = "Delete";
+        del.onclick = async () => {
+          await fetch(`${api}/${t.id}`, { method: "DELETE" });
+          await loadTasks();
+        };
+        li.appendChild(del);
+        list.appendChild(li);
+      });
+    }
+
+    async function addTask() {
+      const name = document.getElementById("taskInput").value.trim();
+      if (!name) return;
+      await fetch(api, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name })
+      });
+      document.getElementById("taskInput").value = "";
+      await loadTasks();
+    }
+
+    document.getElementById("addBtn").onclick = addTask;
+    loadTasks();
+  </script>
+</body>
+</html>
