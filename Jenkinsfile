@@ -39,7 +39,7 @@ pipeline {
                 script {
                     sh '''
                         docker rm -f taskmanager || true
-                        docker run -d --name taskmanager -p 8082:8082 $DOCKER_IMAGE
+                        docker run -d --name taskmanager -p 8082:8080 $DOCKER_IMAGE
                     '''
                 }
             }
