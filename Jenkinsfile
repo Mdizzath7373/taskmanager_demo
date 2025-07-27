@@ -26,7 +26,7 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-hub-credentials', toolName: 'docker-24') {
+                    withDockerRegistry(credentialsId: '4e5ea798-24b5-4268-9b13-9cdb1d691d0d', toolName: 'docker-24') {
                         sh "docker build -t $DOCKER_IMAGE ."
                         sh "docker push $DOCKER_IMAGE"
                     }
@@ -39,7 +39,7 @@ pipeline {
                 script {
                     sh '''
                         docker rm -f taskmanager || true
-                        docker run -d --name taskmanager -p 8080:8080 $DOCKER_IMAGE
+                        docker run -d --name taskmanager -p 8082:8082 $DOCKER_IMAGE
                     '''
                 }
             }
