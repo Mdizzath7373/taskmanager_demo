@@ -50,7 +50,7 @@ pipeline {
         success {
             mail to: 'mohamedizzath2k@gmail.com',
                  subject: "Taskmanager Build & Deployment SUCCESS",
-                 body: "The build and deployment were successful.\nApplication URL: http://<YOUR_SERVER_IP>:8080"
+                 body: "The build and deployment were successful.\nApplication URL: http://172.27.95.162:8082/"
         }
         failure {
             mail to: 'mohamedizzath2k@gmail.com',
